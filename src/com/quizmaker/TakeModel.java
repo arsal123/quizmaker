@@ -1,12 +1,9 @@
 package com.quizmaker;
-import javax.swing.*;
-import java.awt.*;
-import java.io.*;
 import java.util.*;
 
 public class TakeModel
 {
-  private TakeQuiz quizView;
+  private TakeQuizView quizView;
   public Scanner in = Prompt.getInputScanner("File.txt");
   private String [] stringArray = new String[1000];
   private int x = 0;
@@ -40,7 +37,7 @@ public class TakeModel
   {
     return("Answer: Incorrect!");
   }
-  public void setGUI(TakeQuiz currentGUI)
+  public void setGUI(TakeQuizView currentGUI)
   {
     this.quizView = currentGUI;
   }
