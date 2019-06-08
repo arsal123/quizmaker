@@ -1,7 +1,6 @@
 package com.quizmaker;
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 
 public class TakeQuiz extends JPanel
 {
@@ -22,10 +21,12 @@ public class TakeQuiz extends JPanel
   private String answer2Str = "";
   private String answer3Str = "";
   private JLabel title = new JLabel(titleStr);
-  private JRadioButton question = new JRadioButton(questionStr); //Making the question text field
-  private JRadioButton answer1 = new JRadioButton(answer1Str);  //Making the first answer text field
-  private JRadioButton answer2 = new JRadioButton(answer2Str);  //Making the second answer text field
-  private JRadioButton answer3 = new JRadioButton(answer2Str);  //Making the third
+  public ButtonGroup buttonGroup = new ButtonGroup();
+  private JRadioButton option1 = new JRadioButton(questionStr); //Making the option1 text field
+  private JRadioButton option2 = new JRadioButton(answer1Str);  //Making the first answer text field
+  private JRadioButton option3 = new JRadioButton(answer2Str);  //Making the second answer text field
+  private JRadioButton option4 = new JRadioButton(answer2Str);  //Making the third
+
   public JLabel rightAnswer = new JLabel("Answer: ");
   
   //Making the JPanels
@@ -72,10 +73,14 @@ public class TakeQuiz extends JPanel
     
     //Options
     textFields.setLayout(new BoxLayout(textFields, BoxLayout.Y_AXIS));
-    textFields.add(question);
-    textFields.add(answer1);
-    textFields.add(answer2);
-    textFields.add(answer3);
+    buttonGroup.add(option2);
+    buttonGroup.add(option3);
+    buttonGroup.add(option4);
+    buttonGroup.add(option1);
+    textFields.add(option1);
+    textFields.add(option2);
+    textFields.add(option3);
+    textFields.add(option4);
     textFields.setBorder(BorderFactory.createTitledBorder("Options:"));
     
     //Title
@@ -101,15 +106,15 @@ public class TakeQuiz extends JPanel
   private void registerControllers()
   {
     this.quizModel.stringArray();
-    TakeController controller = new TakeController(this.takeQuiz,this.quizModel, this.question.getText(),this.answer1.getText(),this.answer2.getText(),this.answer3.getText());
+    TakeController controller = new TakeController(this.takeQuiz,this.quizModel, this.option1.getText(),this.option2.getText(),this.option3.getText(),this.option4.getText());
     this.next.addActionListener(controller);
     this.close.addActionListener(controller);
     this.done.addActionListener(controller);
     this.main.addActionListener(controller);
-    this.question.addActionListener(controller);
-    this.answer1.addActionListener(controller);
-    this.answer2.addActionListener(controller);
-    this.answer3.addActionListener(controller);
+    this.option1.addActionListener(controller);
+    this.option2.addActionListener(controller);
+    this.option3.addActionListener(controller);
+    this.option4.addActionListener(controller);
   }
   
   //Update the GUI after the actions of the Model
@@ -130,64 +135,64 @@ public class TakeQuiz extends JPanel
     switch(y)
     {
       case 1:
-        this.question.setText(this.quizModel.returnAnswer(num));
-        this.answer1.setText(this.quizModel.returnQuestion2(num));
-        this.answer2.setText(this.quizModel.returnQuestion3(num));
-        this.answer3.setText(this.quizModel.returnQuestion4(num));
+        this.option1.setText(this.quizModel.returnAnswer(num));
+        this.option2.setText(this.quizModel.returnQuestion2(num));
+        this.option3.setText(this.quizModel.returnQuestion3(num));
+        this.option4.setText(this.quizModel.returnQuestion4(num));
         this.quizModel.theAnswer = 1;
       case 2:
-        this.question.setText(this.quizModel.returnQuestion1(num));
-        this.answer1.setText(this.quizModel.returnAnswer(num));
-        this.answer2.setText(this.quizModel.returnQuestion3(num));
-        this.answer3.setText(this.quizModel.returnQuestion4(num));
+        this.option1.setText(this.quizModel.returnQuestion1(num));
+        this.option2.setText(this.quizModel.returnAnswer(num));
+        this.option3.setText(this.quizModel.returnQuestion3(num));
+        this.option4.setText(this.quizModel.returnQuestion4(num));
         this.quizModel.theAnswer = 2;
       case 3:
-        this.question.setText(this.quizModel.returnQuestion1(num));
-        this.answer1.setText(this.quizModel.returnQuestion2(num));
-        this.answer2.setText(this.quizModel.returnAnswer(num));
-        this.answer3.setText(this.quizModel.returnQuestion4(num));
+        this.option1.setText(this.quizModel.returnQuestion1(num));
+        this.option2.setText(this.quizModel.returnQuestion2(num));
+        this.option3.setText(this.quizModel.returnAnswer(num));
+        this.option4.setText(this.quizModel.returnQuestion4(num));
         this.quizModel.theAnswer = 3;
       case 4:
-        this.question.setText(this.quizModel.returnQuestion1(num));
-        this.answer1.setText(this.quizModel.returnQuestion2(num));
-        this.answer2.setText(this.quizModel.returnQuestion3(num));
-        this.answer3.setText(this.quizModel.returnAnswer(num));
+        this.option1.setText(this.quizModel.returnQuestion1(num));
+        this.option2.setText(this.quizModel.returnQuestion2(num));
+        this.option3.setText(this.quizModel.returnQuestion3(num));
+        this.option4.setText(this.quizModel.returnAnswer(num));
         this.quizModel.theAnswer = 4;
       case 5:
-        this.question.setText(this.quizModel.returnQuestion2(num));
-        this.answer1.setText(this.quizModel.returnQuestion3(num));
-        this.answer2.setText(this.quizModel.returnAnswer(num));
-        this.answer3.setText(this.quizModel.returnQuestion4(num));
+        this.option1.setText(this.quizModel.returnQuestion2(num));
+        this.option2.setText(this.quizModel.returnQuestion3(num));
+        this.option3.setText(this.quizModel.returnAnswer(num));
+        this.option4.setText(this.quizModel.returnQuestion4(num));
         this.quizModel.theAnswer = 3;
       case 6:
-        this.question.setText(this.quizModel.returnQuestion4(num));
-        this.answer1.setText(this.quizModel.returnAnswer(num));
-        this.answer2.setText(this.quizModel.returnQuestion3(num));
-        this.answer3.setText(this.quizModel.returnQuestion1(num));
+        this.option1.setText(this.quizModel.returnQuestion4(num));
+        this.option2.setText(this.quizModel.returnAnswer(num));
+        this.option3.setText(this.quizModel.returnQuestion3(num));
+        this.option4.setText(this.quizModel.returnQuestion1(num));
         this.quizModel.theAnswer = 2;
       case 7:
-        this.question.setText(this.quizModel.returnQuestion1(num));
-        this.answer1.setText(this.quizModel.returnQuestion2(num));
-        this.answer2.setText(this.quizModel.returnQuestion3(num));
-        this.answer3.setText(this.quizModel.returnAnswer(num));
+        this.option1.setText(this.quizModel.returnQuestion1(num));
+        this.option2.setText(this.quizModel.returnQuestion2(num));
+        this.option3.setText(this.quizModel.returnQuestion3(num));
+        this.option4.setText(this.quizModel.returnAnswer(num));
         this.quizModel.theAnswer = 4;
       case 8:
-        this.question.setText(this.quizModel.returnAnswer(num));
-        this.answer1.setText(this.quizModel.returnQuestion1(num));
-        this.answer2.setText(this.quizModel.returnQuestion2(num));
-        this.answer3.setText(this.quizModel.returnQuestion3(num));
+        this.option1.setText(this.quizModel.returnAnswer(num));
+        this.option2.setText(this.quizModel.returnQuestion1(num));
+        this.option3.setText(this.quizModel.returnQuestion2(num));
+        this.option4.setText(this.quizModel.returnQuestion3(num));
         this.quizModel.theAnswer = 1;
       case 9:
-        this.question.setText(this.quizModel.returnQuestion1(num));
-        this.answer1.setText(this.quizModel.returnAnswer(num));
-        this.answer2.setText(this.quizModel.returnQuestion4(num));
-        this.answer3.setText(this.quizModel.returnQuestion3(num));
+        this.option1.setText(this.quizModel.returnQuestion1(num));
+        this.option2.setText(this.quizModel.returnAnswer(num));
+        this.option3.setText(this.quizModel.returnQuestion4(num));
+        this.option4.setText(this.quizModel.returnQuestion3(num));
         this.quizModel.theAnswer = 2;
       case 10:
-        this.question.setText(this.quizModel.returnAnswer(num));
-        this.answer1.setText(this.quizModel.returnQuestion2(num));
-        this.answer2.setText(this.quizModel.returnQuestion4(num));
-        this.answer3.setText(this.quizModel.returnQuestion1(num));
+        this.option1.setText(this.quizModel.returnAnswer(num));
+        this.option2.setText(this.quizModel.returnQuestion2(num));
+        this.option3.setText(this.quizModel.returnQuestion4(num));
+        this.option4.setText(this.quizModel.returnQuestion1(num));
         this.quizModel.theAnswer = 1;
     }
     this.label.setText("Question #"+num);
