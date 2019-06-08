@@ -1,15 +1,19 @@
 package com.quizmaker;
 import javax.swing.*;
 import java.awt.*;
+import com.quizmaker.common.Values;
+import org.apache.commons.lang.StringUtils;
 
-public class TakeQuiz extends JPanel
+public class TakeQuizView extends JPanel
 {
   private TakeModel quizModel;
-  private TakeQuiz takeQuiz;
+  private TakeQuizView takeQuizView;
+
   
   //Making the buttons for the quiz maker
   private JButton main = new JButton ("Main Menu");
   private JButton next = new JButton ("Next");   //Making the "Next" button
+  private JButton check = new JButton (Values.CHECK);   //Check the result
   private JButton close = new JButton ("Close"); //Making the "Close" button
   private JButton done = new JButton ("Done");   //Making the "Done" button
   
@@ -21,6 +25,7 @@ public class TakeQuiz extends JPanel
   private String answer2Str = "";
   private String answer3Str = "";
   private JLabel title = new JLabel(titleStr);
+
   public ButtonGroup buttonGroup = new ButtonGroup();
   private JRadioButton option1 = new JRadioButton(questionStr); //Making the option1 text field
   private JRadioButton option2 = new JRadioButton(answer1Str);  //Making the first answer text field
@@ -46,7 +51,7 @@ public class TakeQuiz extends JPanel
   private JLabel label = new JLabel("Question #"+num);
   
   //Making the constructor for the QuizGUI
-  public TakeQuiz(TakeModel quizModel)
+  public TakeQuizView(TakeModel quizModel)
   {
     super();
     this.quizModel = quizModel;
@@ -55,11 +60,20 @@ public class TakeQuiz extends JPanel
     this.registerControllers();  //Having the controllers to be registered by the controller class
     this.update();
   }
-  
+
+  public ButtonGroup getButtonGroup() {
+    return buttonGroup;
+  }
+
+  public ButtonModel getSelection() {
+    return buttonGroup.getSelection();
+  }
+
   //Adding the buttons and text field to the panel
   private void layoutView()
   {
     //Buttons
+    quizButtons.add(check);
     quizButtons.add(next);
     quizButtons.add(close);
     quizButtons.add(done);
@@ -106,15 +120,16 @@ public class TakeQuiz extends JPanel
   private void registerControllers()
   {
     this.quizModel.stringArray();
-    TakeController controller = new TakeController(this.takeQuiz,this.quizModel, this.option1.getText(),this.option2.getText(),this.option3.getText(),this.option4.getText());
-    this.next.addActionListener(controller);
-    this.close.addActionListener(controller);
-    this.done.addActionListener(controller);
-    this.main.addActionListener(controller);
-    this.option1.addActionListener(controller);
-    this.option2.addActionListener(controller);
-    this.option3.addActionListener(controller);
-    this.option4.addActionListener(controller);
+    TakeController takeController = new TakeController(this.quizModel, this.option1.getText(),this.option2.getText(),this.option3.getText(),this.option4.getText());
+    this.next.addActionListener(takeController);
+    this.check.addActionListener(takeController);
+    this.close.addActionListener(takeController);
+    this.done.addActionListener(takeController);
+    this.main.addActionListener(takeController);
+    this.option1.addActionListener(takeController);
+    this.option2.addActionListener(takeController);
+    this.option3.addActionListener(takeController);
+    this.option4.addActionListener(takeController);
   }
   
   //Update the GUI after the actions of the Model
@@ -130,7 +145,13 @@ public class TakeQuiz extends JPanel
   }
   public void update()
   {
-    this.title.setText(this.quizModel.returnTitle(num));
+    String question = this.quizModel.returnTitle(num);
+    if (StringUtils.isBlank(question)){
+      System.out.println("THE END OF QUESTIONS");
+      return;
+    }
+    this.title.setText(question);
+
     int y = (int)(Math.random()*((10-1)+1))+1;
     switch(y)
     {

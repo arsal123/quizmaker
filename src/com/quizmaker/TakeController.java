@@ -1,12 +1,15 @@
 package com.quizmaker;
+import com.quizmaker.common.Values;
+
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Enumeration;
 
-public class TakeController extends Object implements ActionListener 
+public class TakeController implements ActionListener
 {
   //model linked to the controller
   private TakeModel quiz;
-  private TakeQuiz theView;
+  private TakeQuizView theView ;
   
   //components linked to the controller
   private String answer1 = ""; 
@@ -21,10 +24,9 @@ public class TakeController extends Object implements ActionListener
   //@para answer1     first choice to user inputted question
   //@para answer2     second choice to user inputted question
   //@para answer3     third choice to user inputted question
-  public TakeController(TakeQuiz theView, TakeModel quiz, String answer1, String answer2, String answer3, String answer4)
+  public TakeController(TakeModel quiz, String answer1, String answer2, String answer3, String answer4)
   {
     super();
-    this.theView = theView;
     this.quiz = quiz;
     this.answer1 = answer1;
     this.answer2 = answer2;
@@ -43,6 +45,16 @@ public class TakeController extends Object implements ActionListener
     {
       this.quiz.in.close();
       this.quiz.getMenu();
+    }
+    if((e.getActionCommand()).equals(Values.CHECK)){
+//        Print the sel option
+      ButtonGroup buttonGroup = QuizMaker.getTakeQuizView().getButtonGroup();
+      Enumeration<AbstractButton> btns = buttonGroup.getElements();
+      AbstractButton btn = btns.nextElement();
+      ButtonModel sel = QuizMaker.getTakeQuizView().getSelection();
+//      System.out.println("VALUE:" + btn.getText());
+//      compare it with the right option
+//      display output in the answer
     }
     if ((e.getActionCommand()).equals("Close"))
     {
